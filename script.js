@@ -14,9 +14,9 @@ let clicks = 0;
 let started = false;
 
 const phrases = [
-  "Toca el corazón Marcela ❤️",
-  "Ufff casi pero te falta... ❤️",
-  "Ya casiiiii solo dale un poquito mas... ❤️",
+  "Toca el corazón ❤️",
+  "Ufff casi, pero te falta... ❤️",
+  "Ya casiiiii, solo dale un poquito mas... ❤️",
   "Un último toque, a veces lo bueno se hace esperar... ❤️",
   "¿Estás lista, Marce? Porque yo tengo nervios... ❤️"
 ];
