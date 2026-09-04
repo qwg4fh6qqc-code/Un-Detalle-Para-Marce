@@ -14,11 +14,11 @@ let clicks = 0;
 let started = false;
 
 const phrases = [
-  "Toca el corazón",
-  "Un poquito más...",
-  "Ya casi...",
-  "Un último toque...",
-  "Listo ❤️"
+  "Toca el corazón Marcela ❤️",
+  "Ufff casi pero te falta ❤️...",
+  "Ya casiiiii solo dale un poquito mas...",
+  "Un último toque, a veces lo bueno se hace esperar...",
+  "¿Estás lista, Marce? Porque yo tengo nervios..."
 ];
 
 function handleHeartClick() {
@@ -29,7 +29,8 @@ function handleHeartClick() {
 
   loaderFill.style.width = `${percentage}%`;
   percent.textContent = `${percentage}%`;
-  loadingText.textContent = phrases[clicks];
+  loadingText.textContent =
+  clicks < 5 ? phrases[clicks] : "Abriendo...";
 
   startBtn.classList.remove("pulse");
   void startBtn.offsetWidth;
@@ -61,11 +62,19 @@ function showFallback(img) {
 window.showFallback = showFallback;
 
 function reveal() {
-  document.querySelectorAll(".page-content > *, .letter-card, .champagne, .closing-line, .second-photo, .mini-polaroid, .memory-caption, .final-photo, .final-content > *")
+  document
+    .querySelectorAll(
+      ".page-content > *, .letter-card, .champagne, .closing-line, .second-photo, .mini-polaroid, .memory-caption, .final-photo, .final-content > *"
+    )
     .forEach((el, index) => {
+      el.classList.add("reveal");
+
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * .9) {
-        setTimeout(() => el.classList.add("visible"), Math.min(index * 90, 600));
+
+      if (rect.top < window.innerHeight * 0.9) {
+        setTimeout(() => {
+          el.classList.add("visible");
+        }, Math.min(index * 90, 600));
       }
     });
 }
@@ -76,8 +85,14 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, {threshold: .14});
 
-document.querySelectorAll(".page-content > *, .letter-card, .champagne, .closing-line, .second-photo, .mini-polaroid, .memory-caption, .final-photo, .final-content > *")
-  .forEach(el => observer.observe(el));
+document
+  .querySelectorAll(
+    ".page-content > *, .letter-card, .champagne, .closing-line, .second-photo, .mini-polaroid, .memory-caption, .final-photo, .final-content > *"
+  )
+  .forEach(el => {
+    el.classList.add("reveal");
+    observer.observe(el);
+  });
 
 function updateScroll() {
   const total = document.documentElement.scrollHeight - window.innerHeight;
