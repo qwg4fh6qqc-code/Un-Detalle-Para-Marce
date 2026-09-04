@@ -89,11 +89,11 @@ restartButton.addEventListener("click", () => {
 
 // Precarga opcional de las fotos para que la experiencia se sienta más fluida.
 [
-  "assets/foto1.jpg",
-  "assets/foto2.jpg",
-  "assets/foto3.jpg",
-  "assets/foto4.jpg",
-  "assets/foto-final.jpg"
+  "assets/foto1.JPEG",
+  "assets/foto2.JPEG",
+  "assets/foto3.JPEG",
+  "assets/foto4.JPEG",
+  "assets/foto-final.JPEG"
 ].forEach(src => {
   const img = new Image();
   img.src = src;
