@@ -1,104 +1,128 @@
-const intro = document.getElementById("intro");
-const experience = document.getElementById("experience");
-const startButton = document.getElementById("startButton");
-const progress = document.getElementById("progress");
-const openNote = document.getElementById("openNote");
-const envelope = document.getElementById("envelope");
-const letter = document.getElementById("letter");
-const restartButton = document.getElementById("restartButton");
+const loadingScreen = document.getElementById("loadingScreen");
+const startBtn = document.getElementById("startBtn");
+const site = document.getElementById("site");
+const loaderFill = document.getElementById("loaderFill");
+const percent = document.getElementById("percent");
+const loadingText = document.getElementById("loadingText");
+const tapNote = document.getElementById("tapNote");
+const topProgress = document.getElementById("topProgress");
+const openMessage = document.getElementById("openMessage");
+const confetti = document.getElementById("confetti");
+const againBtn = document.getElementById("againBtn");
 
+let clicks = 0;
 let started = false;
 
-function startExperience() {
+const phrases = [
+  "Toca el corazón",
+  "Un poquito más...",
+  "Ya casi...",
+  "Un último toque...",
+  "Listo ❤️"
+];
+
+function handleHeartClick() {
   if (started) return;
-  started = true;
 
-  intro.classList.add("hide");
-  experience.setAttribute("aria-hidden", "false");
-  experience.classList.add("active");
+  clicks = Math.min(clicks + 1, 5);
+  const percentage = clicks * 20;
 
-  setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    revealVisible();
-  }, 500);
-}
+  loaderFill.style.width = `${percentage}%`;
+  percent.textContent = `${percentage}%`;
+  loadingText.textContent = phrases[clicks];
 
-startButton.addEventListener("click", startExperience);
+  startBtn.classList.remove("pulse");
+  void startBtn.offsetWidth;
+  startBtn.classList.add("pulse");
 
-// También permite tocar en cualquier parte de la pantalla inicial.
-intro.addEventListener("click", (event) => {
-  if (event.target !== startButton && !started) startExperience();
-});
+  tapNote.textContent =
+    clicks < 5
+      ? `${5 - clicks} ${5 - clicks === 1 ? "toque" : "toques"} restantes`
+      : "Abriendo...";
 
-function revealVisible() {
-  const elements = document.querySelectorAll(".reveal");
+  if (clicks === 5) {
+    started = true;
+    startBtn.disabled = true;
 
-  elements.forEach((element) => {
-    const rect = element.getBoundingClientRect();
-    const visible = rect.top < window.innerHeight * 0.88 &&
-                    rect.bottom > window.innerHeight * 0.08;
-
-    if (visible) element.classList.add("visible");
-  });
-}
-
-function updateProgress() {
-  const scrollTop = window.scrollY;
-  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  const percent = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
-  progress.style.width = `${Math.min(percent, 100)}%`;
-}
-
-window.addEventListener("scroll", () => {
-  if (!started) return;
-  revealVisible();
-  updateProgress();
-}, { passive: true });
-
-openNote.addEventListener("click", () => {
-  envelope.classList.toggle("open");
-  letter.classList.toggle("open");
-
-  const isOpen = letter.classList.contains("open");
-  openNote.textContent = isOpen ? "Cerrar la nota" : "Abrir la nota";
-  letter.setAttribute("aria-hidden", String(!isOpen));
-
-  if (isOpen) {
     setTimeout(() => {
-      letter.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 250);
+      loadingScreen.classList.add("hide");
+      site.setAttribute("aria-hidden", "false");
+      site.classList.add("ready");
+      reveal();
+    }, 800);
   }
+}
+
+startBtn.addEventListener("click", handleHeartClick);
+
+function showFallback(img) {
+  img.style.display = "none";
+}
+window.showFallback = showFallback;
+
+function reveal() {
+  document.querySelectorAll(".page-content > *, .letter-card, .champagne, .closing-line, .second-photo, .mini-polaroid, .memory-caption, .final-photo, .final-content > *")
+    .forEach((el, index) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * .9) {
+        setTimeout(() => el.classList.add("visible"), Math.min(index * 90, 600));
+      }
+    });
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add("visible");
+  });
+}, {threshold: .14});
+
+document.querySelectorAll(".page-content > *, .letter-card, .champagne, .closing-line, .second-photo, .mini-polaroid, .memory-caption, .final-photo, .final-content > *")
+  .forEach(el => observer.observe(el));
+
+function updateScroll() {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+  topProgress.style.width = `${Math.min(100, pct)}%`;
+}
+window.addEventListener("scroll", updateScroll, {passive:true});
+
+function launchConfetti() {
+  confetti.innerHTML = "";
+  const pieces = 55;
+
+  for (let i = 0; i < pieces; i++) {
+    const piece = document.createElement("i");
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.animationDelay = `${Math.random() * 1.5}s`;
+    piece.style.animationDuration = `${2.4 + Math.random() * 2}s`;
+    piece.style.transform = `rotate(${Math.random() * 180}deg)`;
+    piece.style.background = ["#b76b55","#d0aa7a","#8e7770","#c38c72","#e2cbb4"][i % 5];
+    confetti.appendChild(piece);
+  }
+}
+
+openMessage.addEventListener("click", () => {
+  document.getElementById("messageSection").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+  setTimeout(launchConfetti, 450);
 });
 
-restartButton.addEventListener("click", () => {
+againBtn.addEventListener("click", () => {
+  clicks = 0;
   started = false;
-  letter.classList.remove("open");
-  envelope.classList.remove("open");
-  openNote.textContent = "Abrir la nota";
-  intro.classList.remove("hide");
-  experience.classList.remove("active");
-  experience.setAttribute("aria-hidden", "true");
-  document.querySelectorAll(".reveal").forEach(el => el.classList.remove("visible"));
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-  setTimeout(() => {
-    started = false;
-  }, 900);
+  loaderFill.style.width = "0%";
+  percent.textContent = "0%";
+  loadingText.textContent = phrases[0];
+  tapNote.textContent = "5 toques para continuar";
+  site.classList.remove("ready");
+  site.setAttribute("aria-hidden", "true");
+  loadingScreen.classList.remove("hide");
+  startBtn.disabled = false;
+  startBtn.classList.remove("pulse");
+  confetti.innerHTML = "";
+  window.scrollTo({top:0,behavior:"smooth"});
 });
 
-// Precarga opcional de las fotos para que la experiencia se sienta más fluida.
-[
-  "assets/foto1.JPEG",
-  "assets/foto2.JPEG",
-  "assets/foto3.JPEG",
-  "assets/foto4.JPEG",
-  "assets/foto-final.JPEG"
-].forEach(src => {
-  const img = new Image();
-  img.src = src;
-});
-
-// Inicialización.
-updateProgress();
-revealVisible();
+updateScroll();
