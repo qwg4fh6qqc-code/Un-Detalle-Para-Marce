@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f8eee9">
+  <meta name="description" content="Un recuerdo especial">
+  <title>Para Marcela ❤️</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="app">
+
+    <!-- PANTALLA DE INICIO -->
+    <section class="screen intro-screen" id="intro">
+      <div class="grain"></div>
+      <div class="intro-content">
+        <p class="eyebrow">PARA TI</p>
+        <h1>Marce ❤️</h1>
+        <p class="intro-subtitle">Otra vez…</p>
+
+        <button class="start-button" id="startButton" aria-label="Tocar para comenzar">
+          <span class="heart">♥</span>
+          <span class="pulse pulse-1"></span>
+          <span class="pulse pulse-2"></span>
+        </button>
+
+        <p class="tap-hint">Toca el corazón para comenzar</p>
+      </div>
+    </section>
+
+    <!-- EXPERIENCIA -->
+    <section class="experience" id="experience" aria-hidden="true">
+      <div class="progress" id="progress"></div>
+
+      <section class="story-section hero-story">
+        <div class="floating-hearts" aria-hidden="true">
+          <span>♡</span><span>♡</span><span>♥</span><span>♡</span>
+        </div>
+        <p class="eyebrow reveal">UN PEQUEÑO RECUERDO</p>
+        <h2 class="reveal">Hay algo que<br><em>quiero decirte.</em></h2>
+        <p class="story-text reveal">Y pensé que una pantalla no era suficiente.</p>
+        <div class="scroll-cue reveal">
+          <span>Desliza</span>
+          <span class="arrow">↓</span>
+        </div>
+      </section>
+
+      <section class="story-section photo-section">
+        <div class="photo-card reveal">
+          <img src="assets/foto1.JPEG" alt="Foto 1" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')">
+        </div>
+        <p class="photo-caption reveal">Un momento que merece quedarse.</p>
+      </section>
+
+      <section class="story-section note-section">
+        <div class="envelope reveal" id="envelope">
+          <div class="envelope-flap"></div>
+          <div class="envelope-body">
+            <span>💌</span>
+          </div>
+        </div>
+
+        <button class="note-button reveal" id="openNote">Abrir la nota</button>
+
+        <article class="letter" id="letter" aria-hidden="true">
+          <div class="letter-paper">
+            <p class="letter-date">PARA TI</p>
+            <h3>Una pequeña nota</h3>
+            <p>
+              A veces las palabras no alcanzan para explicar lo que una persona
+              significa. Por eso hice este pequeño espacio, para guardar algunos
+              recuerdos y decirte algo que quizá ya sabes, pero que nunca está
+              de más repetir.
+            </p>
+            <p>
+              Gracias por cada momento, por las risas, por las conversaciones
+              y por todas esas pequeñas cosas que terminan convirtiéndose en
+              grandes recuerdos.
+            </p>
+            <p class="signature">Con cariño,<br><strong>Sebas ❤️</strong></p>
+          </div>
+        </article>
+      </section>
+
+      <section class="story-section gallery-section">
+        <p class="eyebrow reveal">NUESTROS RECUERDOS</p>
+        <h2 class="reveal">Algunas de mis<br><em>favoritas.</em></h2>
+
+        <div class="gallery">
+          <div class="gallery-card card-a reveal">
+            <img src="assets/foto2.JPEG" alt="Foto 2" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')">
+            <span>Agrega foto2.JPEG</span>
+          </div>
+          <div class="gallery-card card-b reveal">
+            <img src="assets/foto3.JPEG" alt="Foto 3" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')">
+            <span>Agrega foto3.JPEG</span>
+          </div>
+          <div class="gallery-card card-c reveal">
+            <img src="assets/foto4.JPEG" alt="Foto 4" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')">
+            <span>Agrega foto4.JPEG</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="story-section final-section">
+        <div class="final-photo reveal">
+          <img src="assets/foto-final.JPEG" alt="Foto final" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder')">
+          <span>Agrega foto-final.JPEG</span>
+        </div>
+
+        <p class="eyebrow reveal">Y PARA TERMINAR…</p>
+        <h2 class="reveal">Gracias por<br><em>estar aquí.</em><br><em>Te quiero mucho Cielito❤️</em></h2>
+        <p class="final-message reveal">
+          Espero que cuando vuelvas a ver esto, recuerdes todos esos momentos
+          que hicieron especial nuestra historia.
+        </p>
+        <p class="reveal"><em>Mira debajo del asiento 😊</em></p>
+
+        <button class="restart-button reveal" id="restartButton">Volver a empezar ♥</button>
+      </section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
